@@ -23,6 +23,29 @@
   </head>
 
   <body>
+    <% if session[:user_id] %>
+      <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #f8f9fa; border-bottom: 1px solid #e9ecef;">
+        <div>
+          <h3>Last seen: <%= format_last_seen(current_user.last_seen) %></h3>
+          <p>Page visits: <%= page_visits %> | Total visits: <%= total_visits %></p>
+        </div>
+        <%= button_to "Logout", "/logout", method: :delete, style: "padding: 5px 10px; border-radius: 4px; cursor: pointer;" %>
+      </header>
+
+    <% end %>
+
+    <% greeting = case Time.current.hour
+      when 5..11
+        "Good morning!"
+      when 12..16
+        "Good afternoon!"
+      when 17..20
+        "Good evening!"
+      else
+        "Good night!"
+      end %>
+    <h1 style="text-align: center; margin: 1em; font-size: 2em; color: #666; font-weight: 400;"><%= greeting %></h1>
+    
     <%= yield %>
   </body>
 </html>
